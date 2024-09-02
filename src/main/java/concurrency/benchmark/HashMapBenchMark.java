@@ -53,11 +53,5 @@ public class HashMapBenchMark {
         System.out.println("ConcurrentHashMap time taken: " + (endTime - startTime) / 1_000_000 + " ms");
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        System.out.println("Benchmarking HashMap:");
-        benchmarkHashMap();
 
-        System.out.println("Benchmarking ConcurrentHashMap:");
-        benchmarkConcurrentHashMap();
-    }
 }

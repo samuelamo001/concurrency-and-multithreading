@@ -21,7 +21,7 @@ public class Main {
         }
 
 
-        /*CopyOnWriteArrayListConcurrency listConcurrency = new CopyOnWriteArrayListConcurrency();
+        CopyOnWriteArrayListConcurrency listConcurrency = new CopyOnWriteArrayListConcurrency();
 
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -47,7 +47,7 @@ public class Main {
         executor.execute(task2);
         executor.execute(task3);
 
-        executor.shutdown();*/
+        executor.shutdown();
     }
 
 }

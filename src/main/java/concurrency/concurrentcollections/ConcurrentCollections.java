@@ -31,17 +31,6 @@ public class ConcurrentCollections {
         return concurrentMap;
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        ConcurrentCollections hashMap = new ConcurrentCollections();
-        Map<String, Integer> map = hashMap.useConcurrentHashMap();
-
-        System.out.println("Printing map results");
-
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
-        }
-    }
-
 
 }
 
