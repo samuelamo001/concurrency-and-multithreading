@@ -1,53 +1,44 @@
 package concurrency;
 
-import concurrency.benchmark.HashMapBenchMark;
-import concurrency.concurrentcollections.ConcurrentCollections;
-import concurrency.concurrentcollections.CopyOnWriteArrayListConcurrency;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
 
-        ConcurrentCollections hashMap = new ConcurrentCollections();
-        Map<String, Integer> map = hashMap.useConcurrentHashMap();
+        BankAccount bankAccount = new BankAccount(1000);
 
-        System.out.println("Printing map results");
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
 
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
+        List<Future<Integer>> futures = new ArrayList<>();
+
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 200)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 50)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 300)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 1000)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 1000)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 8000)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 600)));
+        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 900)));
+
+        executorService.shutdown();
+
+        int totalWithdrawn = 0;
+        for (Future<Integer> future : futures) {
+            try {
+                totalWithdrawn += future.get();
+
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
+        System.out.println("Total withdrawn " + totalWithdrawn + " from bank account");
+        System.out.println("Total balance " + bankAccount.getBalance());
 
 
-        CopyOnWriteArrayListConcurrency listConcurrency = new CopyOnWriteArrayListConcurrency();
-
-
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-
-
-        Runnable task1 = () -> {
-            listConcurrency.addFruit("Mango");
-            listConcurrency.printFruits();
-        };
-
-        Runnable task2 = () -> {
-            listConcurrency.addFruit("Pawpaw");
-            listConcurrency.printFruits();
-        };
-
-        Runnable task3 = () -> {
-            listConcurrency.addFruit("Apple");
-            listConcurrency.printFruits();
-        };
-
-
-        executor.execute(task1);
-        executor.execute(task2);
-        executor.execute(task3);
-
-        executor.shutdown();
     }
-
 }
