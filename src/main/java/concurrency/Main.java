@@ -1,43 +1,73 @@
 package concurrency;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import concurrency.deadlock.DeadLockArrayList;
+import concurrency.forkjoin.MaxValueTask;
+import concurrency.threadInteruption.ArrayPrinterTask;
+
+import java.util.Arrays;
+import java.util.concurrent.*;
 
 public class Main {
+
     public static void main(String[] args) throws InterruptedException {
 
-        BankAccount bankAccount = new BankAccount(1000);
+        // testing fork join pool
 
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
+ /*       int[] arr = new int[100];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (int) (Math.random() * 1000);
+        }
 
-        List<Future<Integer>> futures = new ArrayList<>();
+        ForkJoinPool pool = new ForkJoinPool();
+        MaxValueTask task = new MaxValueTask(arr, 0, arr.length);
+        int result = pool.invoke(task);
+        System.out.println("Maximum Value: " + result);*/
 
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 200)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 50)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 300)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 1000)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 1000)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 8000)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 600)));
-        futures.add(executorService.submit(new BankAccountOperations(bankAccount, 900)));
+        // testing thread deadlock
 
-        executorService.shutdown();
+/*        DeadLockArrayList deadLockArrayList = new DeadLockArrayList();
 
-        int totalWithdrawn = 0;
-        for (Future<Integer> future : futures) {
+        Thread threadOne = new Thread(() -> {
             try {
-                totalWithdrawn += future.get();
-
-            } catch (InterruptedException | ExecutionException e) {
+                deadLockArrayList.threadOneAddToList();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-        System.out.println("Total withdrawn " + totalWithdrawn + " from bank account");
-        System.out.println("Total balance " + bankAccount.getBalance());
+
+        });
+
+        Thread threadTwo = new Thread(() -> {
+            try {
+                deadLockArrayList.threadTwoAddToList();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        threadOne.start();
+        threadTwo.start();
+
+        threadOne.join();
+        threadTwo.join();
+
+        System.out.println("Task complete");*/
+
+        // testing thread interruption
+        int[] numbers = new int[300];
+        Arrays.setAll(numbers, i -> i * 10);
+
+        Thread taskThread = new Thread(new ArrayPrinterTask(numbers));
+        taskThread.start();
+
+        Thread.sleep(5000);
+
+        taskThread.interrupt();
+
+        taskThread.join();
+
+        System.out.println("Thread completed successfully");
+
+
 
 
     }
