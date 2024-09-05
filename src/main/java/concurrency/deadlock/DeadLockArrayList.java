@@ -14,10 +14,10 @@ public class DeadLockArrayList {
 
     public void threadOneAddToList() throws InterruptedException {
         try {
-            if (lock1.tryLock(500, TimeUnit.MILLISECONDS)){
+            if (lock1.tryLock()){
                 System.out.println("Thread 1 acquired lock 1");
                 Thread.sleep(1000);
-                if (lock2.tryLock(500, TimeUnit.MILLISECONDS)){
+                if (lock2.tryLock()){
                     try {
                         System.out.println("Thread 1 acquired lock 2");
                         list.add(1);
@@ -40,10 +40,10 @@ public class DeadLockArrayList {
 
     public void threadTwoAddToList() throws InterruptedException {
         try {
-            if (lock2.tryLock(500, TimeUnit.MILLISECONDS)){
+            if (lock2.tryLock()){
                 System.out.println("Thread 2 acquired lock 2");
                 Thread.sleep(1000);
-                if (lock1.tryLock(500, TimeUnit.MILLISECONDS)){
+                if (lock1.tryLock()){
                     try {
                         System.out.println("Thread 2 acquired lock 1");
                         list.add(2);

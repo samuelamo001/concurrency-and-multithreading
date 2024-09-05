@@ -13,7 +13,7 @@ public class Main {
 
         // testing fork join pool
 
- /*       int[] arr = new int[100];
+        int[] arr = new int[100];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (int) (Math.random() * 1000);
         }
@@ -21,11 +21,11 @@ public class Main {
         ForkJoinPool pool = new ForkJoinPool();
         MaxValueTask task = new MaxValueTask(arr, 0, arr.length);
         int result = pool.invoke(task);
-        System.out.println("Maximum Value: " + result);*/
+        System.out.println("Maximum Value: " + result);
 
         // testing thread deadlock
 
-/*        DeadLockArrayList deadLockArrayList = new DeadLockArrayList();
+        DeadLockArrayList deadLockArrayList = new DeadLockArrayList();
 
         Thread threadOne = new Thread(() -> {
             try {
@@ -50,7 +50,7 @@ public class Main {
         threadOne.join();
         threadTwo.join();
 
-        System.out.println("Task complete");*/
+        System.out.println("Task complete");
 
         // testing thread interruption
         int[] numbers = new int[300];
