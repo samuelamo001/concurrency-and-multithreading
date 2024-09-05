@@ -1,14 +1,12 @@
 package concurrency;
 
-import concurrency.benchmark.HashMapBenchMark;
 import concurrency.concurrentcollections.ConcurrentCollections;
 import concurrency.concurrentcollections.CopyOnWriteArrayListConcurrency;
-
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.*;
+
 public class Main {
+
     public static void main(String[] args) throws InterruptedException {
 
         ConcurrentCollections hashMap = new ConcurrentCollections();
@@ -22,7 +20,6 @@ public class Main {
 
 
         CopyOnWriteArrayListConcurrency listConcurrency = new CopyOnWriteArrayListConcurrency();
-
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
@@ -48,6 +45,9 @@ public class Main {
         executor.execute(task3);
 
         executor.shutdown();
+
+
     }
+
 
 }
