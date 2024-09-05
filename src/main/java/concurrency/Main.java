@@ -10,25 +10,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
 
-        Runnable task = () -> {
-            for (int i = 0; i < 100; i++) {
-                counter.incrementAndGet();
-            }
 
-        };
-
-        Thread thread = new Thread(task);
-        Thread thread2 = new Thread(task);
-
-        thread.start();
-        thread2.start();
-        thread.join();
-        thread2.join();
-
-        System.out.println("Final counter value: " + counter.get());
-
-
-       /* PrintQueue printQueue = new PrintQueue(3);
+        PrintQueue printQueue = new PrintQueue(3);
 
         Printer printer = new Printer(printQueue);
 
@@ -44,7 +27,6 @@ public class Main {
         user3.start();
         user4.start();
         user5.start();
-*/
 
 
     }
