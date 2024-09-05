@@ -4,6 +4,7 @@ public class Printer extends Thread{
 
     private PrintQueue printQueue;
 
+
     public Printer(PrintQueue printQueue) {
         this.printQueue = printQueue;
     }
@@ -17,5 +18,7 @@ public class Printer extends Thread{
         }catch (InterruptedException e){
             e.printStackTrace();
         }
+
+
     }
 }

@@ -14,6 +14,8 @@ public class PrintQueue {
     private final Condition notFull = lock.newCondition();
     private final Condition notEmpty = lock.newCondition();
 
+
+
     public PrintQueue(int capacity){
         this.capacity = capacity;
     }
