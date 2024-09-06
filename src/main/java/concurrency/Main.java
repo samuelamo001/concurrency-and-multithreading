@@ -21,6 +21,8 @@ public class Main {
         User user4 = new User(printQueue, "Document 4");
         User user5 = new User(printQueue, "Document 5");
 
+
+
         printer.start();
         user1.start();
         user2.start();
